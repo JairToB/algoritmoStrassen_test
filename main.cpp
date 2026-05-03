@@ -29,12 +29,14 @@ void printMatrix(std::vector<std::vector<int>> matrixRandom){
 }
 
 int main(){
-    std::vector<std::vector<int>> matrixA(2, std::vector<int>(2, 3));
-    std::vector<std::vector<int>> matrixB(2, std::vector<int>(2, 3));
-    std::vector<std::vector<int>> matrixC(2, std::vector<int>(2, 0));
+    int n = 32;
+    for(int i = 2; i <= n; i = i * 2){
+        std::vector<std::vector<int>> matrixA(i, std::vector<int>(i, 3));
+        std::vector<std::vector<int>> matrixB(i, std::vector<int>(i, 3));
+        std::vector<std::vector<int>> matrixC(i, std::vector<int>(i, 0));
 
-    double totalTime = measureStandard(matrixA, matrixB, matrixC);
-    printMatrix(matrixC);
-    std::cout << "Time: " << totalTime << " microsegundos" <<std::endl;
+        double totalTime = measureStandard(matrixA, matrixB, matrixC);
+        std::cout << "Time: " << totalTime << " microsegundos" <<std::endl;
+    }
     return 0;
 }
