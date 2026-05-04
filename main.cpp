@@ -36,7 +36,7 @@ int main(){
         std::vector<std::vector<int>> matrixC(i, std::vector<int>(i, 0));
 
         double totalTime = measureStandard(matrixA, matrixB, matrixC);
-        std::cout << "Time: " << totalTime << " microsegundos" <<std::endl;
+        std::cout << i << " " << totalTime <<std::endl;
     }
     return 0;
 }
