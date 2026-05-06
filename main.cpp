@@ -12,6 +12,15 @@ void matrixMultiplication(std::vector<std::vector<int>>& A, std::vector<std::vec
     }
 }
 
+std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C, int n){  
+    if(A.size() == 1 && B.size() == 1){
+        C[0][0] = A[0][0] * B[0][0];
+        return C;
+    }
+    
+    return matrixStrassen(A, B, C, n/2);
+}
+
 double measureStandard(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C) {
     auto start = std::chrono::high_resolution_clock::now();
     matrixMultiplication(A, B, C);
@@ -29,8 +38,8 @@ void printMatrix(std::vector<std::vector<int>> matrixRandom){
 }
 
 int main(){
-    int n = 512;
-    for(int i = 2; i <= n; i++){
+    int n = 32;
+    for(int i = 2; i <= n; i = i * 2){
         std::vector<std::vector<int>> matrixA(i, std::vector<int>(i, 3));
         std::vector<std::vector<int>> matrixB(i, std::vector<int>(i, 3));
         std::vector<std::vector<int>> matrixC(i, std::vector<int>(i, 0));
