@@ -12,12 +12,16 @@ void matrixMultiplication(std::vector<std::vector<int>>& A, std::vector<std::vec
     }
 }
 
-std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C, int n){  
+std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C, int n){
     if(A.size() == 1 && B.size() == 1){
         C[0][0] = A[0][0] * B[0][0];
         return C;
     }
-    
+    portionA = n/2;
+    portionB = n/2;
+
+    C[portionA][portionB] = A[portionA][portionA] + B[portionB][portionB];
+
     return matrixStrassen(A, B, C, n/2);
 }
 
