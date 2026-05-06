@@ -17,10 +17,16 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
         C[0][0] = A[0][0] * B[0][0];
         return C;
     }
-    portionA = n/2;
-    portionB = n/2;
+    subSize = n/2;
 
-    C[portionA][portionB] = A[portionA][portionA] + B[portionB][portionB];
+    std::vector<std::vector<int>> submatrixA_11(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixA_12(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixA_21(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixA_22(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixB_11(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixB_12(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vectro<int>> submatrixB_21(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixB_22(subSize, std::vector<int>(subSize, 0));
 
     return matrixStrassen(A, B, C, n/2);
 }
