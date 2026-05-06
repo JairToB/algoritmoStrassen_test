@@ -17,7 +17,7 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
         C[0][0] = A[0][0] * B[0][0];
         return C;
     }
-    subSize = n/2;
+    int subSize = n/2;
 
     std::vector<std::vector<int>> submatrixA_11(subSize, std::vector<int>(subSize, 0));
     std::vector<std::vector<int>> submatrixA_12(subSize, std::vector<int>(subSize, 0));
@@ -25,8 +25,25 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
     std::vector<std::vector<int>> submatrixA_22(subSize, std::vector<int>(subSize, 0));
     std::vector<std::vector<int>> submatrixB_11(subSize, std::vector<int>(subSize, 0));
     std::vector<std::vector<int>> submatrixB_12(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vectro<int>> submatrixB_21(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixB_21(subSize, std::vector<int>(subSize, 0));
     std::vector<std::vector<int>> submatrixB_22(subSize, std::vector<int>(subSize, 0));
+    
+    for(int i = 0; i < subSize; i++){
+        for(int j = 0; j < subSize; j++){
+            submatrixA_11[i][j] = A[i][j];
+            submatrixA_12[i][j] = A[i][j+subSize];
+            submatrixA_21[i][j] = A[i+subSize][j];
+            submatrixA_22[i][j] = A[i+subSize][j+subSize];
+        }
+    }
+    for(int i = 0; i < subSize; i++){
+        for(int j = 0; j < subSize; j++){
+            submatrixB_11[i][j] = B[i][j];
+            submatrixB_12[i][j] = B[i][j+subSize];
+            submatrixB_21[i][j] = B[i+subSize][j];
+            submatrixB_22[i][j] = B[i+subSize][j+subSize];
+        }
+    }
 
     return matrixStrassen(A, B, C, n/2);
 }
