@@ -140,6 +140,13 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
     return C;
 }
 
+double measureStrassen(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C, int n) {
+    auto start = std::chrono::high_resolution_clock::now();
+    matrixStrassen(A, B, C, n);
+    auto end = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration<double, std::micro>(end - start).count();
+}
+
 double measureStandard(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C) {
     auto start = std::chrono::high_resolution_clock::now();
     matrixMultiplication(A, B, C);
@@ -163,8 +170,9 @@ int main(){
         std::vector<std::vector<int>> matrixB(i, std::vector<int>(i, 3));
         std::vector<std::vector<int>> matrixC(i, std::vector<int>(i, 0));
 
-        double totalTime = measureStandard(matrixA, matrixB, matrixC);
-        std::cout << i << " " << totalTime <<std::endl;
+        double totalTimeStandard = measureStandard(matrixA, matrixB, matrixC);
+        double totalTimeStrassen = measureStrassen(matrixA, matrixB, matrixC, i);
+        std::cout << i << " " << totalTimeStandard << " " << totalTimeStrassen << std::endl;
     }
     return 0;
 }

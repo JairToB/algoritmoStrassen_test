@@ -3,7 +3,7 @@ TARGET = test
 SRC = main.cpp
 DATA = data.dat
 PLOT = plot.gp
-IMG = graficoStandardMatrix.png
+IMG = graficoComparacion.png
 
 CXX = g++
 CXXFLAGS = -O2
