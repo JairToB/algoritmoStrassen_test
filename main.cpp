@@ -50,7 +50,7 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
     std::vector<std::vector<int>> auxSubtract_1(subSize, std::vector<int>(subSize, 0));
     for(int i = 0; i < subSize; i++){
         for(int j = 0; j < subSize; j++){
-            auxSubtract_1[i][j]= submatrixB_12[i][j]-submatrixB_22[i][j];
+            auxSubtract_1[i][j]= submatrixB_12[i][j] - submatrixB_22[i][j];
         }
     }
     matrixStrassen(submatrixA_11, auxSubtract_1, P_1, subSize);
@@ -114,6 +114,19 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
         }
     }
     matrixStrassen(auxSubtract_7, auxAdd_7, P_7, subSize);
+
+    std::vector<std::vector<int>> submatrixC_11(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixC_12(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixC_21(subSize, std::vector<int>(subSize, 0));
+    std::vector<std::vector<int>> submatrixC_22(subSize, std::vector<int>(subSize, 0));
+    for(int i = 0; i < subSize; i++){
+        for(int j = 0; j < subSize; j++){
+            submatrixC_11[i][j] = P_5[i][j] + P_4[i][j] - P_2[i][j] + P_6[i][j];
+            submatrixC_12[i][j] = P_1[i][j] + P_2[i][j];
+            submatrixC_21[i][j] = P_3[i][j] + P_4[i][j];
+            submatrixC_22[i][j] = P_5[i][j] + P_1[i][j] - P_3[i][j] - P_7[i][j];
+        }
+    }
 
     return matrixStrassen(A, B, C, n/2);
 }
