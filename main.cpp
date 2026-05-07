@@ -128,7 +128,16 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
         }
     }
 
-    return matrixStrassen(A, B, C, n/2);
+    for(int i = 0; i < subSize; i++){
+        for(int j = 0; j < subSize; j++){
+            C[i][j] = submatrixC_11[i][j];
+            C[i][j+subSize] = submatrixC_12[i][j];
+            C[i+subSize][j] = submatrixC_21[i][j];
+            C[i+subSize][j+subSize] = submatrixC_22[i][j];
+        }
+    }
+    
+    return C;
 }
 
 double measureStandard(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C) {
