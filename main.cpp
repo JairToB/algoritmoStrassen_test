@@ -12,6 +12,28 @@ void matrixMultiplication(std::vector<std::vector<int>>& A, std::vector<std::vec
     }
 }
 
+std::vector<std::vector<int>> add(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B){
+    int n = A.size();
+    std::vector<std::vector<int>> result(n, std::vector<int>(n, 0));
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            result[i][j] = A[i][j] + B[i][j];
+        }
+    }
+    return result;
+}
+
+std::vector<std::vector<int>> subtract(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B){
+    int n = A.size();
+    std::vector<std::vector<int>> result(n, std::vector<int>(n, 0));
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            result[i][j] = A[i][j] - B[i][j];
+        }
+    }
+    return result;
+}
+
 std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C, int n){
     if(A.size() == 1 && B.size() == 1){
         C[0][0] = A[0][0] * B[0][0];
@@ -45,74 +67,35 @@ std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, s
             submatrixB_22[i][j] = B[i+subSize][j+subSize];
         }
     }
-    
     std::vector<std::vector<int>> P_1(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxSubtract_1(subSize, std::vector<int>(subSize, 0));
-    for(int i = 0; i < subSize; i++){
-        for(int j = 0; j < subSize; j++){
-            auxSubtract_1[i][j]= submatrixB_12[i][j] - submatrixB_22[i][j];
-        }
-    }
+    std::vector<std::vector<int>> auxSubtract_1 = subtract(submatrixB_12, submatrixB_22);
     matrixStrassen(submatrixA_11, auxSubtract_1, P_1, subSize);
     
     std::vector<std::vector<int>> P_2(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxAdd_2(subSize, std::vector<int>(subSize, 0));
-    for(int i = 0; i < subSize; i++){
-        for(int j = 0; j < subSize; j++){
-            auxAdd_2[i][j] = submatrixA_11[i][j] + submatrixA_12[i][j];
-        }
-    }
+    std::vector<std::vector<int>> auxAdd_2 = add(submatrixA_11, submatrixA_12);
     matrixStrassen(auxAdd_2, submatrixB_22, P_2, subSize);
 
     std::vector<std::vector<int>> P_3(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxAdd_3(subSize, std::vector<int>(subSize, 0));
-    for(int i = 0; i < subSize; i++){
-        for(int j = 0; j < subSize; j++){
-            auxAdd_3[i][j] = submatrixA_21[i][j] + submatrixA_22[i][j];
-        }
-    }
+    std::vector<std::vector<int>> auxAdd_3 = add(submatrixA_21, submatrixA_22);
     matrixStrassen(auxAdd_3, submatrixB_11, P_3, subSize);
 
     std::vector<std::vector<int>> P_4(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxSubtract_4(subSize, std::vector<int>(subSize, 0));
-    for(int i = 0; i < subSize; i++){
-        for(int j = 0; j < subSize; j++){
-            auxSubtract_4[i][j] = submatrixB_21[i][j] - submatrixB_11[i][j];
-        }
-    }
+    std::vector<std::vector<int>> auxSubtract_4 = subtract(submatrixB_21, submatrixB_11);
     matrixStrassen(submatrixA_22, auxSubtract_4, P_4, subSize);
 
     std::vector<std::vector<int>> P_5(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxAdd_5A(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxAdd_5B(subSize, std::vector<int>(subSize, 0));
-    for(int i = 0; i < subSize; i++){
-        for(int j = 0; j < subSize; j++){
-            auxAdd_5A[i][j] = submatrixA_11[i][j] + submatrixA_22[i][j];
-            auxAdd_5B[i][j] = submatrixB_11[i][j] + submatrixB_22[i][j];
-        }
-    }
+    std::vector<std::vector<int>> auxAdd_5A = add(submatrixA_11, submatrixA_22);
+    std::vector<std::vector<int>> auxAdd_5B = add(submatrixB_11, submatrixB_22);
     matrixStrassen(auxAdd_5A, auxAdd_5B, P_5, subSize);
 
     std::vector<std::vector<int>> P_6(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxSubtract_6(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxAdd_6(subSize, std::vector<int>(subSize, 0));
-    for(int i = 0; i < subSize; i++){
-        for(int j = 0; j < subSize; j++){
-            auxSubtract_6[i][j] = submatrixA_12[i][j] - submatrixA_22[i][j];
-            auxAdd_6[i][j] = submatrixB_21[i][j] + submatrixB_22[i][j];
-        }
-    }
+    std::vector<std::vector<int>> auxSubtract_6 = subtract(submatrixA_12, submatrixA_22);
+    std::vector<std::vector<int>> auxAdd_6 = add(submatrixB_21, submatrixB_22);
     matrixStrassen(auxSubtract_6, auxAdd_6, P_6, subSize);
 
     std::vector<std::vector<int>> P_7(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxSubtract_7(subSize, std::vector<int>(subSize, 0));
-    std::vector<std::vector<int>> auxAdd_7(subSize, std::vector<int>(subSize, 0));
-    for(int i = 0; i < subSize; i++){
-        for(int j = 0; j < subSize; j++){
-            auxSubtract_7[i][j] = submatrixA_11[i][j] - submatrixA_21[i][j];
-            auxAdd_7[i][j] = submatrixB_11[i][j] + submatrixB_12[i][j];
-        }
-    }
+    std::vector<std::vector<int>> auxSubtract_7 = subtract(submatrixA_11, submatrixA_21);
+    std::vector<std::vector<int>> auxAdd_7 = add(submatrixB_11, submatrixB_12);
     matrixStrassen(auxSubtract_7, auxAdd_7, P_7, subSize);
 
     std::vector<std::vector<int>> submatrixC_11(subSize, std::vector<int>(subSize, 0));
