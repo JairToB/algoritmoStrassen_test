@@ -35,8 +35,8 @@ std::vector<std::vector<int>> subtract(std::vector<std::vector<int>>& A, std::ve
 }
 
 std::vector<std::vector<int>> matrixStrassen(std::vector<std::vector<int>>& A, std::vector<std::vector<int>>& B, std::vector<std::vector<int>>& C, int n){
-    if(A.size() == 1 && B.size() == 1){
-        C[0][0] = A[0][0] * B[0][0];
+    if(A.size() <= 32){
+        matrixMultiplication(A, B, C);
         return C;
     }
     int subSize = n/2;
