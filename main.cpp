@@ -147,7 +147,7 @@ void printMatrix(std::vector<std::vector<int>> matrixRandom){
 }
 
 int main(){
-    int n = 32;
+    int n = 128;
     for(int i = 2; i <= n; i = i * 2){
         std::vector<std::vector<int>> matrixA(i, std::vector<int>(i, 3));
         std::vector<std::vector<int>> matrixB(i, std::vector<int>(i, 3));
